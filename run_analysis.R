@@ -10,12 +10,12 @@ x_test<-read.table("~/Getting-and-Cleaning-Data-Proj-Assignment/UCI HAR Dataset/
 y_test<-read.table("~/Getting-and-Cleaning-Data-Proj-Assignment/UCI HAR Dataset/test/y_test.txt")
 subTest<-read.table("~/Getting-and-Cleaning-Data-Proj-Assignment/UCI HAR Dataset/test/subject_test.txt")
 subTrain<-read.table("~/Getting-and-Cleaning-Data-Proj-Assignment/UCI HAR Dataset/train/subject_train.txt")
+ColNames<-read.table("~/Getting-and-Cleaning-Data-Proj-Assignment/UCI HAR Dataset/features.txt")
 
 a<-cbind(x_test,y_test,subTest)
 b<-cbind(x_train,y_train,subTrain)
 MergedTab<-rbind(a,b)
 
-ColNames<-read.table("~/Getting-and-Cleaning-Data-Proj-Assignment/UCI HAR Dataset/features.txt")
 names(MergedTab)=c(paste(as.character(ColNames$V2)),"Activity","Subject")
 CN<-names(MergedTab)
 Mean_Index<-grep("[Mm][Ee][Aa][Nn]\\(\\)",CN)
