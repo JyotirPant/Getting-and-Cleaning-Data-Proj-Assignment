@@ -1,14 +1,21 @@
-x_train<-read.table("~/Getting-and-Cleaning-Data-Proj-Assignment/train/X_train.txt")
-y_train<-read.table("~/Getting-and-Cleaning-Data-Proj-Assignment/train/y_train.txt")
-x_test<-read.table("~/Getting-and-Cleaning-Data-Proj-Assignment/test/X_test.txt")
-y_test<-read.table("~/Getting-and-Cleaning-Data-Proj-Assignment/test/y_test.txt")
-subTest<-read.table("~/Getting-and-Cleaning-Data-Proj-Assignment/test/subject_test.txt")
-subTrain<-read.table("~/Getting-and-Cleaning-Data-Proj-Assignment/train/subject_train.txt")
+library(dplyr)
+library(readr)
+library(tibble)
+library(data.table)
+library(tidyr)
+
+x_train<-read.table("~/Getting-and-Cleaning-Data-Proj-Assignment/UCI HAR Dataset/train/X_train.txt")
+y_train<-read.table("~/Getting-and-Cleaning-Data-Proj-Assignment/UCI HAR Dataset/train/y_train.txt")
+x_test<-read.table("~/Getting-and-Cleaning-Data-Proj-Assignment/UCI HAR Dataset/test/X_test.txt")
+y_test<-read.table("~/Getting-and-Cleaning-Data-Proj-Assignment/UCI HAR Dataset/test/y_test.txt")
+subTest<-read.table("~/Getting-and-Cleaning-Data-Proj-Assignment/UCI HAR Dataset/test/subject_test.txt")
+subTrain<-read.table("~/Getting-and-Cleaning-Data-Proj-Assignment/UCI HAR Dataset/train/subject_train.txt")
+
 a<-cbind(x_test,y_test,subTest)
 b<-cbind(x_train,y_train,subTrain)
 MergedTab<-rbind(a,b)
 
-ColNames<-read.table(choose.files())
+ColNames<-read.table("~/Getting-and-Cleaning-Data-Proj-Assignment/UCI HAR Dataset/features.txt")
 names(MergedTab)=c(paste(as.character(ColNames$V2)),"Activity","Subject")
 CN<-names(MergedTab)
 Mean_Index<-grep("[Mm][Ee][Aa][Nn]\\(\\)",CN)
@@ -29,7 +36,6 @@ names(MergedTab)<-CN1
 ##First Output
 Data_Tab<-tbl_df(MergedTab)[,c(Mean_SD_Index,562,563)]
 
-library(data.table)
 res<-sapply(split(DT[1:66],list(DT$Subject,DT$Activity)),colMeans)
 jj <- as.data.frame(res)
 res<-transpose(jj)
